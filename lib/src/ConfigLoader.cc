@@ -570,6 +570,7 @@ static void loadDbClients(const Json::Value &dbClients)
         auto connectOptions = client.get("connect_options", Json::Value());
         auto timeout = client.get("timeout", -1.0).asDouble();
         auto autoBatch = client.get("auto_batch", false).asBool();
+        auto reconnectInterval = client.get("reconnect_interval", 1).asDouble();
 
         std::unordered_map<std::string, std::string> options;
         if (connectOptions.isObject() && !connectOptions.empty())
@@ -593,6 +594,7 @@ static void loadDbClients(const Json::Value &dbClients)
                                                      characterSet,
                                                      timeout,
                                                      autoBatch,
+                                                     reconnectInterval,
                                                      std::move(options));
     }
 }

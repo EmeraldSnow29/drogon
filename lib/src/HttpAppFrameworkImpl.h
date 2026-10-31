@@ -550,6 +550,7 @@ class HttpAppFrameworkImpl final : public HttpAppFramework
                                      bool isFast,
                                      const std::string &characterSet,
                                      double timeout,
+                                     double reconnectInterval,
                                      bool autoBatch) override;
     // a helper method
     void addDbClient(const std::string &dbType,
@@ -565,6 +566,7 @@ class HttpAppFrameworkImpl final : public HttpAppFramework
                      const std::string &characterSet,
                      double timeout,
                      bool autoBatch,
+                     double reconnectInterval,
                      std::unordered_map<std::string, std::string> options);
     HttpAppFramework &addDbClient(const orm::DbConfig &config) override;
 

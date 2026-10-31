@@ -97,6 +97,7 @@ void DbClientManager::createDbClients(
                 dbClientsMap_[cfg.name] =
                     drogon::orm::DbClient::newPgClient(dbInfo.connectionInfo_,
                                                        cfg.connectionNumber,
+                                                       cfg.reconnectInterval,
                                                        cfg.autoBatch);
                 if (cfg.timeout > 0.0)
                 {
@@ -123,7 +124,7 @@ void DbClientManager::createDbClients(
             else
             {
                 dbClientsMap_[cfg.name] = drogon::orm::DbClient::newMysqlClient(
-                    dbInfo.connectionInfo_, cfg.connectionNumber);
+                    dbInfo.connectionInfo_, cfg.connectionNumber, cfg.reconnectInterval);
                 if (cfg.timeout > 0.0)
                 {
                     dbClientsMap_[cfg.name]->setTimeout(cfg.timeout);
@@ -135,7 +136,8 @@ void DbClientManager::createDbClients(
             auto &cfg = std::get<Sqlite3Config>(dbInfo.config_);
             dbClientsMap_[cfg.name] =
                 drogon::orm::DbClient::newSqlite3Client(dbInfo.connectionInfo_,
-                                                        cfg.connectionNumber);
+                                                        cfg.connectionNumber,
+                                                        cfg.reconnectInterval);
             if (cfg.timeout > 0.0)
             {
                 dbClientsMap_[cfg.name]->setTimeout(cfg.timeout);

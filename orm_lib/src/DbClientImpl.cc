@@ -49,6 +49,7 @@ using namespace drogon::orm;
 
 DbClientImpl::DbClientImpl(const std::string &connInfo,
                            size_t connNum,
+                           double reconnectInterval,
 #if LIBPQ_SUPPORTS_BATCH_MODE
                            ClientType type,
                            bool autoBatch)
@@ -68,6 +69,7 @@ DbClientImpl::DbClientImpl(const std::string &connInfo,
 {
     type_ = type;
     connectionInfo_ = connInfo;
+    reconnectInterval_ = reconnectInterval;
     LOG_TRACE << "type=" << (int)type;
     assert(connNum > 0);
 }
@@ -444,7 +446,7 @@ DbConnectionPtr DbClientImpl::newConnection(trantor::EventLoop *loop)
         auto loop = closeConnPtr->loop();
         // closeConnPtr may be not valid. Close the connection file descriptor.
         closeConnPtr->disconnect();
-        loop->runAfter(1, [weakPtr, loop, closeConnPtr] {
+        loop->runAfter(thisPtr->reconnectInterval_, [weakPtr, loop, closeConnPtr] {
             auto thisPtr = weakPtr.lock();
             if (!thisPtr)
                 return;

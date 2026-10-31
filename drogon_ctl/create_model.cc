@@ -1236,7 +1236,7 @@ void create_model::createModel(const std::string &path,
         }
         std::string connStr = "filename=" + escapeConnString(filename);
         DbClientPtr client =
-            drogon::orm::DbClient::newSqlite3Client(connStr, 1);
+            drogon::orm::DbClient::newSqlite3Client(connStr, 1, 1);
         std::cout << "Connect..." << std::endl;
         if (forceOverwrite_)
         {

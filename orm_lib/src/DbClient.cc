@@ -32,11 +32,13 @@ orm::internal::SqlBinder DbClient::operator<<(std::string &&sql)
 
 std::shared_ptr<DbClient> DbClient::newPgClient(const std::string &connInfo,
                                                 size_t connNum,
+                                                double reconnectInterval,
                                                 bool autoBatch)
 {
 #if USE_POSTGRESQL
     auto client = std::make_shared<DbClientImpl>(connInfo,
                                                  connNum,
+                                                 reconnectInterval,
 #if LIBPQ_SUPPORTS_BATCH_MODE
                                                  ClientType::PostgreSQL,
                                                  autoBatch);
@@ -54,11 +56,14 @@ std::shared_ptr<DbClient> DbClient::newPgClient(const std::string &connInfo,
 }
 
 std::shared_ptr<DbClient> DbClient::newMysqlClient(const std::string &connInfo,
-                                                   size_t connNum)
+                                                   size_t connNum,
+                                                   double reconnectInterval)
 {
 #if USE_MYSQL
     auto client = std::make_shared<DbClientImpl>(connInfo,
                                                  connNum,
+                                                 reconnectInterval,
+
 #if LIBPQ_SUPPORTS_BATCH_MODE
                                                  ClientType::Mysql,
                                                  false);
@@ -77,11 +82,13 @@ std::shared_ptr<DbClient> DbClient::newMysqlClient(const std::string &connInfo,
 
 std::shared_ptr<DbClient> DbClient::newSqlite3Client(
     const std::string &connInfo,
-    size_t connNum)
+    size_t connNum,
+    double reconnectInterval)
 {
 #if USE_SQLITE3
     auto client = std::make_shared<DbClientImpl>(connInfo,
                                                  connNum,
+                                                 reconnectInterval,
 #if LIBPQ_SUPPORTS_BATCH_MODE
                                                  ClientType::Sqlite3,
                                                  false);

@@ -1,9 +1,9 @@
 [requires]
-jsoncpp/1.9.4
+jsoncpp/1.9.5
 zlib/1.2.11
 gtest/1.10.0
 sqlite3/3.40.1
-#libpq/13.2
+libpq/14.24
 openssl/1.1.1t
 hiredis/1.0.0
 brotli/1.0.9
