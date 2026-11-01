@@ -48,7 +48,8 @@ static void initFastDbClients(IOThreadStorage<orm::DbClientPtr> &storage,
                               ClientType dbType,
                               size_t connNum,
                               bool autoBatch,
-                              double timeout)
+                              double timeout,
+                              double reconnectInterval)
 {
     storage.init([&](orm::DbClientPtr &c, size_t idx) {
         assert(idx == ioLoops[idx]->index());
@@ -57,6 +58,7 @@ static void initFastDbClients(IOThreadStorage<orm::DbClientPtr> &storage,
             new drogon::orm::DbClientLockFree(connInfo,
                                               ioLoops[idx],
                                               dbType,
+                                              reconnectInterval,
 #if LIBPQ_SUPPORTS_BATCH_MODE  // Bad code
                                               connNum,
                                               autoBatch));
@@ -90,7 +92,8 @@ void DbClientManager::createDbClients(
                                   ClientType::PostgreSQL,
                                   cfg.connectionNumber,
                                   cfg.autoBatch,
-                                  cfg.timeout);
+                                  cfg.timeout,
+                                  cfg.reconnectInterval);
             }
             else
             {
@@ -119,7 +122,8 @@ void DbClientManager::createDbClients(
                                   ClientType::Mysql,
                                   cfg.connectionNumber,
                                   false,
-                                  cfg.timeout);
+                                  cfg.timeout,
+                                  cfg.reconnectInterval);
             }
             else
             {

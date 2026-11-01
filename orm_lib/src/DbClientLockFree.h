@@ -36,6 +36,7 @@ class DbClientLockFree : public DbClient,
     DbClientLockFree(const std::string &connInfo,
                      trantor::EventLoop *loop,
                      ClientType type,
+                     double reconnectInterval,
 #if LIBPQ_SUPPORTS_BATCH_MODE
                      size_t connectionNumberPerLoop,
                      bool autoBatch);
@@ -88,6 +89,7 @@ class DbClientLockFree : public DbClient,
     std::list<TransCallbackEntry> transCallbacks_;
 
     double timeout_{-1.0};
+    double reconnectInterval_{1.0};
 
     void makeTrans(
         const DbConnectionPtr &conn,

@@ -2743,7 +2743,7 @@ DROGON_TEST(MySQLTest)
 #if USE_SQLITE3
 DROGON_TEST(SQLite3Test)
 {
-    auto clientPtr = DbClient::newSqlite3Client("filename=:memory:", 1);
+    auto clientPtr = DbClient::newSqlite3Client("filename=:memory:", 1, 1);
     REQUIRE(clientPtr != nullptr);
 
     // Prepare the test environment
@@ -4064,7 +4064,7 @@ DROGON_TEST(SQLite3Test)
 #if USE_SQLITE3
 DROGON_TEST(SQLite3TransactionTypeTest)
 {
-    auto clientPtr = DbClient::newSqlite3Client("filename=:memory:", 1);
+    auto clientPtr = DbClient::newSqlite3Client("filename=:memory:", 1, 1);
     REQUIRE(clientPtr != nullptr);
 
     // Ensure the test table exists
@@ -4183,7 +4183,7 @@ DROGON_TEST(SQLite3TransactionTypeLockingTest)
         "drogon_trans_type_lock_test_" + std::to_string(nonce) + ".db";
     std::remove(dbPath.c_str());
 
-    auto pool = DbClient::newSqlite3Client("filename=" + dbPath, 2);
+    auto pool = DbClient::newSqlite3Client("filename=" + dbPath, 2, 1);
     // WAL mode is required: it changes BEGIN IMMEDIATE from acquiring a
     // RESERVED lock to acquiring the WAL write lock. This matches production
     // usage and makes the busy semantics more predictable — only one writer
