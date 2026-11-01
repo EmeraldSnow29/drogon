@@ -4260,6 +4260,7 @@ int main(int argc, char **argv)
         "host=127.0.0.1 port=5432 dbname=postgres user=postgres password=12345 "
         "client_encoding=utf8",
         1,
+        1,
         true);
 #endif
     const int testStatus = test::run(argc, argv);
