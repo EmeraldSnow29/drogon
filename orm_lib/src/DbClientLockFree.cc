@@ -44,6 +44,7 @@ using namespace drogon::orm;
 DbClientLockFree::DbClientLockFree(const std::string &connInfo,
                                    trantor::EventLoop *loop,
                                    ClientType type,
+                                   double reconnectInterval,
 #if LIBPQ_SUPPORTS_BATCH_MODE
                                    size_t connectionNumberPerLoop,
                                    bool autoBatch)
@@ -57,6 +58,7 @@ DbClientLockFree::DbClientLockFree(const std::string &connInfo,
 #endif
       numberOfConnections_(connectionNumberPerLoop)
 {
+    reconnectInterval_ = reconnectInterval;
     type_ = type;
     LOG_TRACE << "type=" << (int)type;
     if (type == ClientType::PostgreSQL || type == ClientType::Mysql)
@@ -465,12 +467,13 @@ DbConnectionPtr DbClientLockFree::newConnection()
 
         thisPtr->transSet_.erase(closeConnPtr);
         // Reconnect after 1 second
-        thisPtr->loop_->runAfter(1, [weakPtr, closeConnPtr] {
-            auto thisPtr = weakPtr.lock();
-            if (!thisPtr)
-                return;
-            thisPtr->newConnection();
-        });
+        thisPtr->loop_->runAfter(thisPtr->reconnectInterval_,
+                                 [weakPtr, closeConnPtr] {
+                                     auto thisPtr = weakPtr.lock();
+                                     if (!thisPtr)
+                                         return;
+                                     thisPtr->newConnection();
+                                 });
     });
     connPtr->setOkCallback([weakPtr](const DbConnectionPtr &okConnPtr) {
         LOG_TRACE << "connected!";

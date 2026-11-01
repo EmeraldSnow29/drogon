@@ -34,6 +34,7 @@ class DbClientImpl : public DbClient,
   public:
     DbClientImpl(const std::string &connInfo,
                  size_t connNum,
+                 double reconnectInterval,
 #if LIBPQ_SUPPORTS_BATCH_MODE
                  ClientType type,
                  bool autoBatch);
@@ -74,6 +75,7 @@ class DbClientImpl : public DbClient,
     trantor::EventLoopThreadPool loops_;
     std::shared_ptr<SharedMutex> sharedMutexPtr_;
     double timeout_{-1.0};
+    double reconnectInterval_{1.0};
 #if LIBPQ_SUPPORTS_BATCH_MODE
     bool autoBatch_{false};
 #endif

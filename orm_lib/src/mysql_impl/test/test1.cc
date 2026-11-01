@@ -14,7 +14,7 @@ int main()
 {
     trantor::Logger::setLogLevel(trantor::Logger::kTrace);
     auto clientPtr = DbClient::newMysqlClient(
-        "host= 127.0.0.1    port  =3306 dbname= test user = root  ", 1);
+        "host= 127.0.0.1    port  =3306 dbname= test user = root  ", 1, 1);
     std::this_thread::sleep_for(1s);
     // for (int i = 0; i < 10; ++i)
     // {

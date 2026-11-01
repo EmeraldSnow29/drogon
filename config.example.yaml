@@ -57,6 +57,9 @@
 #     # timeout: -1 by default, in seconds, the timeout for executing a SQL query.
 #     # zero or negative value means no timeout.
 #     timeout: -1
+#     # reconnect_interval: 1 by default. The frequency to attempt to connect to the database, in seconds.
+#     # Must be greater than 0.
+#     reconnect_interval: 1
 #     # auto_batch: this feature is only available for the PostgreSQL driver(version >= 14.0), see
 #     # the wiki for more details.
 #     auto_batch: false

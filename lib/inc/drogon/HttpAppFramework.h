@@ -1505,6 +1505,7 @@ class DROGON_EXPORT HttpAppFramework : public trantor::NonCopyable
                    bool isFast = false,
                    const std::string &characterSet = "",
                    double timeout = -1.0,
+                   double reconnectInterval = 1,
                    bool autoBatch = false) = 0;
 
     virtual HttpAppFramework &addDbClient(const orm::DbConfig &config) = 0;

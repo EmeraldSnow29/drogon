@@ -130,15 +130,22 @@ class DROGON_EXPORT DbClient : public trantor::NonCopyable
      * 'filename'.
      *
      * @param connNum: The number of connections to database server;
+     *
+     * @param reconnectInterval: The frequency to attempt to connect to the
+     * database, in seconds.
      */
     static std::shared_ptr<DbClient> newPgClient(const std::string &connInfo,
                                                  size_t connNum,
+                                                 double reconnectInterval = 1,
                                                  bool autoBatch = false);
-    static std::shared_ptr<DbClient> newMysqlClient(const std::string &connInfo,
-                                                    size_t connNum);
+    static std::shared_ptr<DbClient> newMysqlClient(
+        const std::string &connInfo,
+        size_t connNum,
+        double reconnectInterval = 1);
     static std::shared_ptr<DbClient> newSqlite3Client(
         const std::string &connInfo,
-        size_t connNum);
+        size_t connNum,
+        double reconnectInterval = 1);
 
     /// Async and nonblocking method
     /**
@@ -350,6 +357,7 @@ class DROGON_EXPORT DbClient : public trantor::NonCopyable
      * is not called.
      */
     virtual void setTimeout(double timeout) = 0;
+
     /**
      * @brief Close all connections in the client. usually used by Drogon in the
      * quit() method.

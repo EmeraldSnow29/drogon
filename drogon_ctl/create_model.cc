@@ -1051,7 +1051,7 @@ void create_model::createModel(const std::string &path,
         }
 
         auto schema = config.get("schema", "public").asString();
-        DbClientPtr client = drogon::orm::DbClient::newPgClient(connStr, 1);
+        DbClientPtr client = drogon::orm::DbClient::newPgClient(connStr, 1, 1);
         std::cout << "Connect to server..." << std::endl;
         if (forceOverwrite_)
         {
@@ -1236,7 +1236,7 @@ void create_model::createModel(const std::string &path,
         }
         std::string connStr = "filename=" + escapeConnString(filename);
         DbClientPtr client =
-            drogon::orm::DbClient::newSqlite3Client(connStr, 1);
+            drogon::orm::DbClient::newSqlite3Client(connStr, 1, 1);
         std::cout << "Connect..." << std::endl;
         if (forceOverwrite_)
         {
