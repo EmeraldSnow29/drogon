@@ -11,7 +11,8 @@ int main()
     trantor::Logger::setLogLevel(trantor::Logger::kTrace);
     auto clientPtr =
         DbClient::newPgClient("host=127.0.0.1 port=5432 dbname=test user=antao",
-                              3, 1);
+                              3,
+                              1);
     LOG_DEBUG << "start!";
     std::this_thread::sleep_for(1s);
     *clientPtr << "update group_users set join_date=$1,relationship=$2 where "
