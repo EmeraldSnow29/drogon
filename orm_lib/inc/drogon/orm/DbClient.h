@@ -134,11 +134,10 @@ class DROGON_EXPORT DbClient : public trantor::NonCopyable
      * @param reconnectInterval: The frequency to attempt to connect to the
      * database, in seconds.
      */
-    static std::shared_ptr<DbClient> newPgClient(
-        const std::string &connInfo,
-        size_t connNum,
-        double reconnectInterval = 1,
-        bool autoBatch = false);
+    static std::shared_ptr<DbClient> newPgClient(const std::string &connInfo,
+                                                 size_t connNum,
+                                                 double reconnectInterval = 1,
+                                                 bool autoBatch = false);
     static std::shared_ptr<DbClient> newMysqlClient(
         const std::string &connInfo,
         size_t connNum,
