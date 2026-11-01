@@ -131,7 +131,8 @@ class DROGON_EXPORT DbClient : public trantor::NonCopyable
      *
      * @param connNum: The number of connections to database server;
      *
-     * @param reconnectInterval: The frequency to attempt to connect to the database, in seconds.
+     * @param reconnectInterval: The frequency to attempt to connect to the
+     * database, in seconds.
      */
     static std::shared_ptr<DbClient> newPgClient(const std::string &connInfo,
                                                  size_t connNum,

@@ -128,7 +128,9 @@ void DbClientManager::createDbClients(
             else
             {
                 dbClientsMap_[cfg.name] = drogon::orm::DbClient::newMysqlClient(
-                    dbInfo.connectionInfo_, cfg.connectionNumber, cfg.reconnectInterval);
+                    dbInfo.connectionInfo_,
+                    cfg.connectionNumber,
+                    cfg.reconnectInterval);
                 if (cfg.timeout > 0.0)
                 {
                     dbClientsMap_[cfg.name]->setTimeout(cfg.timeout);
