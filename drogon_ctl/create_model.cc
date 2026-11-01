@@ -1051,7 +1051,7 @@ void create_model::createModel(const std::string &path,
         }
 
         auto schema = config.get("schema", "public").asString();
-        DbClientPtr client = drogon::orm::DbClient::newPgClient(connStr, 1);
+        DbClientPtr client = drogon::orm::DbClient::newPgClient(connStr, 1, 1);
         std::cout << "Connect to server..." << std::endl;
         if (forceOverwrite_)
         {
