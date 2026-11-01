@@ -948,8 +948,8 @@ HttpAppFramework &HttpAppFrameworkImpl::createDbClient(
                 isFast,
                 characterSet,
                 timeout,
-                reconnectInterval,
                 autoBatch,
+                reconnectInterval,
                 {});
     return *this;
 }
@@ -1003,7 +1003,8 @@ void HttpAppFrameworkImpl::addDbClient(
     }
     else if (dbType == "sqlite3")
     {
-        addDbClient(orm::Sqlite3Config{connectionNum, filename, name, timeout, reconnectInterval});
+        addDbClient(orm::Sqlite3Config{
+            connectionNum, filename, name, timeout, reconnectInterval});
     }
     else
     {

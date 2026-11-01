@@ -468,12 +468,12 @@ DbConnectionPtr DbClientLockFree::newConnection()
         thisPtr->transSet_.erase(closeConnPtr);
         // Reconnect after 1 second
         thisPtr->loop_->runAfter(thisPtr->reconnectInterval_,
-            [weakPtr, closeConnPtr] {
-            auto thisPtr = weakPtr.lock();
-            if (!thisPtr)
-                return;
-            thisPtr->newConnection();
-        });
+                                 [weakPtr, closeConnPtr] {
+                                     auto thisPtr = weakPtr.lock();
+                                     if (!thisPtr)
+                                         return;
+                                     thisPtr->newConnection();
+                                 });
     });
     connPtr->setOkCallback([weakPtr](const DbConnectionPtr &okConnPtr) {
         LOG_TRACE << "connected!";
